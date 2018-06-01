@@ -1,6 +1,7 @@
 package in.infotech;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -100,14 +101,41 @@ public class PEMService {
 	}
 
 	private void onExpenseEntry() {
-		System.out.println("Expense Entry.....");
-		// TODO Auto-generated method stub
+		System.out.println("Enter Details for Expense Entry.....");
+		onCategoryList();
+		System.out.print("Choose category:");
+		int catChoice=sc.nextInt();
+		Category selectedCat= repo.catList.get(catChoice-1);
 		
+		System.out.print("Enter Amount : ");
+		float amount = sc.nextFloat();
+		
+		System.out.print("Enter remark : ");
+		sc.nextLine();
+		String remark =sc.nextLine();
+		
+		Date date =new Date();
+		
+
+		
+		Expense exp = new Expense();
+		exp.setCategoryId(selectedCat.getCategoryId());
+		exp.setAmount(amount);
+		exp.setRemark(remark);
+		exp.setDate(date);
+
+		repo.expList.add(exp);
+		System.out.println("Success : Expense Added...");
 	}
 
 	private void onExpenseList() {
 		System.out.println("Expense list.......");
-		// TODO Auto-generated method stub
+		List<Expense> expList= repo.expList;
+		for(int i=0;i<expList.size();i++){
+			Expense exp = expList.get(i);
+			String catName = getCategoryNameById(exp.getCategoryId());
+			System.out.println((i+1)+". "+catName+", "+exp.getAmount()+", "+exp.getRemark()+", "+exp.getDate());
+		}
 		
 	}
 
@@ -135,6 +163,13 @@ public class PEMService {
 		
 	}
 
-	
+	String getCategoryNameById(Long categoryId){
+		for(Category c: repo.catList){
+			if(c.getCategoryId().equals(categoryId)){
+				return c.getName();
+			}
+		}
+		return null;//category id  not found
+	}
 	
 }
