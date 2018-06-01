@@ -114,7 +114,10 @@ public class PEMService {
 		sc.nextLine();
 		String remark =sc.nextLine();
 		
-		Date date =new Date();
+		System.out.print("Enter Date (DD/MM/YYYY): ");
+		String dateAsString = sc.nextLine();
+		
+		Date date = DateUtil.stringToDate(dateAsString);
 		
 
 		
@@ -134,7 +137,8 @@ public class PEMService {
 		for(int i=0;i<expList.size();i++){
 			Expense exp = expList.get(i);
 			String catName = getCategoryNameById(exp.getCategoryId());
-			System.out.println((i+1)+". "+catName+", "+exp.getAmount()+", "+exp.getRemark()+", "+exp.getDate());
+			String dateString = DateUtil.dateToString(exp.getDate());
+			System.out.println((i+1)+". "+catName+", "+exp.getAmount()+", "+exp.getRemark()+", "+dateString);
 		}
 		
 	}
