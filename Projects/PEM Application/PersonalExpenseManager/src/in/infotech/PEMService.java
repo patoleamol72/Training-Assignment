@@ -3,7 +3,9 @@ package in.infotech;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * 
@@ -13,9 +15,17 @@ import java.util.Scanner;
 
 public class PEMService {
 	Repository repo = Repository.getRepository();
+	PEMReportService reportService = new PEMReportService();
+	
 	private Scanner sc=new Scanner(System.in);
 	private int choice;
 	
+	public PEMService(){
+		prepareSampleData();
+	}
+	
+	
+
 	public void showMenu(){
 		while(true){
 			printMenu();
@@ -144,9 +154,12 @@ public class PEMService {
 	}
 
 	private void onMonthlyExpenseList() {
-		System.out.println("Monthly Expense Listing..");
-		// TODO Auto-generated method stub
-		
+		System.out.println("Monthly Expense Total..");
+		Map<String,Float> resultMap = reportService.calculateMonthlyTotal();
+		Set<String> keys = resultMap.keySet();
+		for(String yearMonth : keys){
+			System.out.println(yearMonth+" : "+resultMap.get(yearMonth));
+		}
 	}
 
 	private void onYearlyExpenseList() {
@@ -174,6 +187,59 @@ public class PEMService {
 			}
 		}
 		return null;//category id  not found
+	}
+	
+	private void prepareSampleData() {
+		Category catParty = new Category("Party");
+		delay();
+		Category catShopping = new Category("Shopping");
+		delay();
+		Category catGift = new Category("Gift");
+		delay();
+		
+		repo.catList.add(catParty);
+		repo.catList.add(catShopping);
+		repo.catList.add(catGift);
+		
+		//Mar -18
+		Expense e1 = new Expense(catParty.getCategoryId(), 2000.0F,DateUtil.stringToDate("23/03/2018"),"Party with Friends");
+		delay();
+		Expense e2 = new Expense(catParty.getCategoryId(), 2000.0F,DateUtil.stringToDate("25/03/2018"),"Party");
+		delay();
+		//Apr - 18
+		Expense e3 = new Expense(catShopping.getCategoryId(), 200.0F,DateUtil.stringToDate("22/04/2018"),"Friends");
+		delay();
+		Expense e4 = new Expense(catParty.getCategoryId(), 6000.0F,DateUtil.stringToDate("28/04/2018"),"Shopping");
+		delay();
+		//may-18
+		Expense e5 = new Expense(catGift.getCategoryId(), 4000.0F,DateUtil.stringToDate("18/05/2018"),"Gift");
+		delay();
+		Expense e6 = new Expense(catParty.getCategoryId(), 1000.0F,DateUtil.stringToDate("12/05/2018"),"Party");
+		delay();
+		Expense e7 = new Expense(catGift.getCategoryId(), 4000.0F,DateUtil.stringToDate("18/05/2018"),"Gift");
+	
+		Expense e8 = new Expense(catParty.getCategoryId(), 1000.0F,DateUtil.stringToDate("12/05/2018"),"Party");
+		
+		repo.expList.add(e1);
+		repo.expList.add(e2);
+		repo.expList.add(e3);
+		repo.expList.add(e4);
+		repo.expList.add(e5);
+		repo.expList.add(e6);
+		repo.expList.add(e7);
+		repo.expList.add(e8);
+		
+	}
+
+
+
+	private void delay() {
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
