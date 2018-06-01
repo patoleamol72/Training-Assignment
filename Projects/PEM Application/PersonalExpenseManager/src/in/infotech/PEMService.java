@@ -1,6 +1,7 @@
 package in.infotech;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -10,6 +11,7 @@ import java.util.Scanner;
  */
 
 public class PEMService {
+	Repository repo = Repository.getRepository();
 	private Scanner sc=new Scanner(System.in);
 	private int choice;
 	
@@ -80,15 +82,21 @@ public class PEMService {
 	}
 	
 	private void onAddCategory() {
-		System.out.println("Adding category....");
-		// TODO Auto-generated method stub
-		
+		sc.nextLine();//new line char is read here which is already present
+		System.out.print("Enter Category Name:");
+		String catName = sc.nextLine();
+		Category cat = new Category(catName);
+		repo.catList.add(cat);
+		System.out.println("Success: Category added");
 	}
 
 	private void onCategoryList() {
-		System.out.println("Listing categories...");
-		// TODO Auto-generated method stub
-		
+		System.out.println("Category List");
+		List<Category> clist=repo.catList;
+		for(int i =0;i<repo.catList.size();i++){
+			Category c = clist.get(i);
+			System.out.println((i+1)+". "+c.getName()+", "+c.getCategoryId());
+		}
 	}
 
 	private void onExpenseEntry() {
