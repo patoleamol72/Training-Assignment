@@ -146,7 +146,7 @@ public class PEMService {
 		List<Expense> expList= repo.expList;
 		for(int i=0;i<expList.size();i++){
 			Expense exp = expList.get(i);
-			String catName = getCategoryNameById(exp.getCategoryId());
+			String catName =  reportService.getCategoryNameById(exp.getCategoryId());
 			String dateString = DateUtil.dateToString(exp.getDate());
 			System.out.println((i+1)+". "+catName+", "+exp.getAmount()+", "+exp.getRemark()+", "+dateString);
 		}
@@ -182,9 +182,19 @@ public class PEMService {
 
 	private void onCategorizedExpenseList() {
 		System.out.println("Category wise Expense Listing..");
-		// TODO Auto-generated method stub
-		
+		reportService.calculateCategoriedTotal();
+		Map<String,Float> resultMap= reportService.calculateCategoriedTotal();
+		Set<String> categories = resultMap.keySet();
+		Float netTotal =0.0F;
+		for(String categoryName : categories){
+			Float catWiseTotal = resultMap.get(categoryName);
+			netTotal=netTotal+catWiseTotal;
+			System.out.println(categoryName+" : "+resultMap.get(categoryName));
+		}
+		System.out.println("--------------------------");
+		System.out.println("Net Total : "+netTotal);
 	}
+
 
 	private void onExit() {
 		System.exit(0);
@@ -192,14 +202,7 @@ public class PEMService {
 		
 	}
 
-	String getCategoryNameById(Long categoryId){
-		for(Category c: repo.catList){
-			if(c.getCategoryId().equals(categoryId)){
-				return c.getName();
-			}
-		}
-		return null;//category id  not found
-	}
+	
 	
 	private void prepareSampleData() {
 		Category catParty = new Category("Party");
