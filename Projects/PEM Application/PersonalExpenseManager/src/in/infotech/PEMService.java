@@ -158,7 +158,11 @@ public class PEMService {
 		Map<String,Float> resultMap = reportService.calculateMonthlyTotal();
 		Set<String> keys = resultMap.keySet();
 		for(String yearMonth : keys){
-			System.out.println(yearMonth+" : "+resultMap.get(yearMonth));
+			String[] arr = yearMonth.split(",");
+			String year =arr[0];
+			Integer monthNo =new Integer(arr[1]);
+			String monthName = DateUtil.getMonthName(monthNo);
+			System.out.println(year+" , "+monthName+", "+resultMap.get(yearMonth));
 		}
 	}
 
@@ -220,6 +224,8 @@ public class PEMService {
 	
 		Expense e8 = new Expense(catParty.getCategoryId(), 1000.0F,DateUtil.stringToDate("12/05/2018"),"Party");
 		
+		Expense e9 = new Expense(catParty.getCategoryId(), 1000.0F,DateUtil.stringToDate("12/05/2014"),"Party");
+		
 		repo.expList.add(e1);
 		repo.expList.add(e2);
 		repo.expList.add(e3);
@@ -228,6 +234,7 @@ public class PEMService {
 		repo.expList.add(e6);
 		repo.expList.add(e7);
 		repo.expList.add(e8);
+		repo.expList.add(e9);
 		
 	}
 

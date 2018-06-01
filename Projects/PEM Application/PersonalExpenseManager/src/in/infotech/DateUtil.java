@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class DateUtil {
 	
+	public static final String [] MONTH ={"January","February","March","April","May","June","July","August","September","Octomber","November","December"};
+	
 	public static Date stringToDate(String dateAsString ){
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		try {
@@ -27,5 +29,8 @@ public class DateUtil {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy,MM");
 		return df.format(date);
 		
+	}
+	public static String getMonthName(Integer monthNo){
+		return MONTH[monthNo-1];
 	}
 }
