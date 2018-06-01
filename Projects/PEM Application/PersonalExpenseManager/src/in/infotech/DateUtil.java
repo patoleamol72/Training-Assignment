@@ -30,6 +30,11 @@ public class DateUtil {
 		return df.format(date);
 		
 	}
+	public static Integer  getYear(Date date){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy");
+		return new Integer(df.format(date));
+		
+	}
 	public static String getMonthName(Integer monthNo){
 		return MONTH[monthNo-1];
 	}

@@ -27,5 +27,26 @@ public class PEMReportService {
 		}
 		return m;//
 	}
+	public Map<Integer,Float> calculateYearlyTotal(){
+		Map<Integer,Float> m=new TreeMap();
+		
+		for(Expense exp : repo.expList){
+			Date expdate = exp.getDate();
+			Integer year = DateUtil.getYear(expdate);
+			
+			if(m.containsKey(year)){
+				//when Expense is already present for year
+			
+				Float total = m.get(year);
+				total=total+exp.getAmount();
+				m.put(year, total);//replace old total
+			}
+			else{
+				//this month is not yet added,so add here
+				m.put(year, exp.getAmount());
+			}
+		}
+		return m;
+	}
 
 }

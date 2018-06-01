@@ -167,9 +167,17 @@ public class PEMService {
 	}
 
 	private void onYearlyExpenseList() {
-		System.out.println("Yearly Expense Listing..");
-		// TODO Auto-generated method stub
-		
+		System.out.println("Yearly Expense Total..");
+		Map<Integer,Float> resultMap = reportService.calculateYearlyTotal();
+		Set<Integer> years = resultMap.keySet();
+		Float total =0.0F;
+		for(Integer year : years){
+			Float exp = resultMap.get(year);
+			total=total+exp;
+			System.out.println(year+" : "+exp);
+		}
+		System.out.println("--------------------------");
+		System.out.println("Total Expense(INR) : "+total);
 	}
 
 	private void onCategorizedExpenseList() {
