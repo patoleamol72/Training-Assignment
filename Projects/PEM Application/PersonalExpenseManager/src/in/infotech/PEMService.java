@@ -8,23 +8,43 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * 
- * 
+ * This class contains most of the operation related to PEM Application.
+ * <p>
+ * This class prepare a menu and various method are present to handle the user action
+ * The class make use of <code>Repository</code> to Store the data.
+ *  Also using <code>PEMReportService</code> to generate different required reports.
  * @author Amol Patole
  */
 
 public class PEMService {
+	/**
+	 * Declare a reference of Repository by calling static method which return a singleton repository object.
+	 */
 	Repository repo = Repository.getRepository();
+	/**
+	 * Declare a reference of ReportService to call different method calculate reports.
+	 */
 	PEMReportService reportService = new PEMReportService();
+	/**
+	 * This is a scanner standard input from keyboard.
+	 */
 	
 	private Scanner sc=new Scanner(System.in);
+	/**
+	 * This variable store the value of menu-choice.
+	 */
 	private int choice;
+	/**
+	 * call this constructor create PEMService object with details.
+	 */
 	
 	public PEMService(){
-		prepareSampleData();
+		//prepareSampleData();
 	}
 	
-	
+	/**
+	 * This method prepares  PEMApp menu using switch-case and infinite loop.
+	 */
 
 	public void showMenu(){
 		while(true){
@@ -65,6 +85,9 @@ public class PEMService {
 			}
 		}
 	}
+	/**
+	 * This method prints a menu(CUT/CLI Menu).
+	 */
 
 	
 	public void printMenu(){
@@ -81,6 +104,10 @@ public class PEMService {
 		System.out.print("Enter your choice");
 		choice = sc.nextInt();
 	}
+	/**
+	 * This method is called to hold a output screen after processing the 
+	 * request task and wait foe any char input to continue to menu.
+	 */
 	public void pressAnyKeyToContine(){
 		System.out.println("Press any key to continue....");
 		try {
@@ -91,6 +118,9 @@ public class PEMService {
 		}
 		
 	}
+	/**
+	 * This method is taking required input to add new category in the system.
+	 */
 	
 	private void onAddCategory() {
 		sc.nextLine();//new line char is read here which is already present
@@ -101,6 +131,9 @@ public class PEMService {
 		System.out.println("Success: Category added");
 	}
 
+	/**
+	 * call this method to print exiting data
+	 */
 	private void onCategoryList() {
 		System.out.println("Category List");
 		List<Category> clist=repo.catList;
@@ -109,7 +142,9 @@ public class PEMService {
 			System.out.println((i+1)+". "+c.getName()+", "+c.getCategoryId());
 		}
 	}
-
+/**
+ * call this method to enter expense detail.The enter detail will be added in repository
+ */
 	private void onExpenseEntry() {
 		System.out.println("Enter Details for Expense Entry.....");
 		onCategoryList();
@@ -140,7 +175,9 @@ public class PEMService {
 		repo.expList.add(exp);
 		System.out.println("Success : Expense Added...");
 	}
-
+/**
+ * this method all Expense List
+ */
 	private void onExpenseList() {
 		System.out.println("Expense list.......");
 		List<Expense> expList= repo.expList;
@@ -152,7 +189,11 @@ public class PEMService {
 		}
 		
 	}
-
+/**
+ * This method calculate the monthly wise expense total.
+ * Its using report service to calculate report. 
+ * The return result is printed by this method.Means this method a call to generate report.
+ */
 	private void onMonthlyExpenseList() {
 		System.out.println("Monthly Expense Total..");
 		Map<String,Float> resultMap = reportService.calculateMonthlyTotal();
@@ -165,7 +206,11 @@ public class PEMService {
 			System.out.println(year+" , "+monthName+", "+resultMap.get(yearMonth));
 		}
 	}
-
+	/**
+	 * This method calculate the Yearly-wise-expense total.
+	 * Its using report service to calculate report. 
+	 * The return result is printed by this method.Means this method a call to generate report.
+	 */
 	private void onYearlyExpenseList() {
 		System.out.println("Yearly Expense Total..");
 		Map<Integer,Float> resultMap = reportService.calculateYearlyTotal();
@@ -179,7 +224,11 @@ public class PEMService {
 		System.out.println("--------------------------");
 		System.out.println("Total Expense(INR) : "+total);
 	}
-
+	/**
+	 * This method calculate the category-wise-expense total.
+	 * Its using report service to calculate report. 
+	 * The return result is printed by this method.Means this method a call to generate report.
+	 */
 	private void onCategorizedExpenseList() {
 		System.out.println("Category wise Expense Listing..");
 		reportService.calculateCategoriedTotal();
@@ -194,7 +243,9 @@ public class PEMService {
 		System.out.println("--------------------------");
 		System.out.println("Net Total : "+netTotal);
 	}
-
+/**
+ * This method is used to call application.
+ */
 
 	private void onExit() {
 		System.exit(0);
@@ -202,7 +253,9 @@ public class PEMService {
 		
 	}
 
-	
+	/**
+	 * This method is used for testing purpose.
+	 */
 	
 	private void prepareSampleData() {
 		Category catParty = new Category("Party");
@@ -248,7 +301,9 @@ public class PEMService {
 		repo.expList.add(e9);
 		
 	}
-
+/**
+ * The method is used for sleep a thread.
+ */
 
 
 	private void delay() {

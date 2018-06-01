@@ -1,10 +1,17 @@
 package in.infotech;
 /**
+ * This is a domain class represent a Category.
  * @author Amol Patole
  */
 
 public class Category {
+	/**
+	 * It refers to a unique category id.It is generated Time as Id.
+	 */
 	private Long categoryId=System.currentTimeMillis();
+	/**
+	 * Name of expense.
+	 */
 	private String name;
 
 	/**

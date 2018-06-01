@@ -1,6 +1,10 @@
 package in.infotech;
 
 import java.util.Date;
+/**
+ * This class represent Expence.
+ * @author Amol Patole
+ */
 
 public class Expense {
 	
