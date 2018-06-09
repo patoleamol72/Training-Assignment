@@ -14,7 +14,7 @@ body{
     
 }
 .header-area{
-    background-image: url("C:/Users/Admin/Desktop/HTML Project/img/header-bg.jpg"); 
+    background-image: url("../img/header-bg.jpg"); 
     height: 580px;
 }
 .container{
@@ -263,7 +263,9 @@ section{
 }
 
 .text-white {
-  color: #fff;
+  font-family: "Courier New" monospace;
+    color: white;
+    font-size: 22px;
 }
 
 .footer-area {
